@@ -92,3 +92,56 @@ Explanation:
 Joins bookings with users and vehicles tables
 Displays booking details with readable names
 
+✅ Query 2: Find all vehicles that have never been booked
+
+Requirement:
+Retrieve vehicles that match the given condition.
+SELECT *
+FROM vehicles
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM vehicles AS v2
+    WHERE v2.vehicle_id = vehicles.vehicle_id
+      AND vehicles.status = 'rented'
+);
+Explanation:
+Uses NOT EXISTS to filter vehicles
+Excludes vehicles based on the specified condition
+
+
+✅ Query 3: Retrieve all available vehicles of a specific type (cars)
+
+Requirement:
+Retrieve all available vehicles of type car.
+SELECT *
+FROM vehicles
+WHERE type = 'car'
+  AND vehicles.status = 'available';
+
+Explanation:
+Filters vehicles by type
+Shows only vehicles that are currently available
+
+
+✅ Query 4: Find vehicles with more than 2 bookings
+
+Requirement:
+Find the total number of bookings for each vehicle and display only those with more than two bookings.
+SELECT 
+  name AS vehicle_name,
+  COUNT(*) AS total_bookings
+FROM vehicles
+INNER JOIN bookings USING (vehicle_id)
+GROUP BY name
+HAVING COUNT(*) > 2;
+
+Explanation:
+Groups booking records by vehicle
+Uses HAVING to filter aggregated results
+
+🛠 Technologies Used
+
+PostgreSQL
+ENUM Types
+Relational Database Concepts
+
