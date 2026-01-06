@@ -18,26 +18,26 @@ ENUM types are used to ensure data integrity by restricting column values.
 
 ```sql
 -- Enum for user roles
-CREATE TYPE role_type AS ENUM ('Admin', 'Customer');
+create type role_type as enum('Admin', 'Customer')
 
 -- Enum for vehicle type and status
-CREATE TYPE vehicle_type AS ENUM ('car', 'bike', 'truck');
-CREATE TYPE status_type AS ENUM ('available', 'rented', 'maintenance');
+create type vehicle_type as enum('car', 'bike', 'truck')
+create type status_type as enum('available', 'rented', 'maintenance')
 
 -- Enum for booking status
-CREATE TYPE bookingStatus_type AS ENUM ('pending', 'confirmed', 'completed', 'cancelled');
+create type bookingStatus_type as enum('pending', 'confirmed', 'completed', 'cancelled')
 
 
 
 🔹 Users Table
 
 Stores user information and their role in the system.
-CREATE TABLE Users (
-  user_id SERIAL PRIMARY KEY,
-  name VARCHAR(50),
-  email VARCHAR(100),
-  password TEXT,
-  phone VARCHAR(15),
+create table users(
+  user_id serial primary key,
+  name varchar(50),
+  email varchar(100),
+  password text,
+  phone varchar(15),
   role role_type
 );
 
@@ -45,29 +45,30 @@ CREATE TABLE Users (
 🔹 Vehicles Table
 
 Stores details of vehicles available for rent.
-CREATE TABLE vehicles (
-  vehicle_id SERIAL PRIMARY KEY,
-  name VARCHAR(50),
+create table vehicles(
+  vehicle_id serial primary key,
+  name varchar(50),
   type vehicle_type,
-  model INT,
-  registration_number VARCHAR(100) UNIQUE,
-  rental_price INT,
+  model int,
+  registration_number varchar(100) unique,
+  Rental_price int,
   status status_type
-);
+  );
 
 
 🔹 Bookings Table
 
 Stores booking information and links users with vehicles.
-CREATE TABLE bookings (
-  booking_id SERIAL PRIMARY KEY,
-  user_id INT REFERENCES users(user_id),
-  vehicle_id INT REFERENCES vehicles(vehicle_id),
-  start_date DATE,
-  end_date DATE,
+create table bookings(
+  booking_id serial primary key,
+  user_id int references users(user_id),
+  vehicle_id int references vehicles(vehicle_id),
+  start_date date,
+  end_date date,
   status bookingStatus_type,
-  total_cost NUMERIC(8,2)
-);
+  total_cost numeric(8, 2)
+  );
+
 
 
 📊 SQL Queries and Explanations
